@@ -35,6 +35,8 @@ Hint: later in the semester, we'll talk more about this code above. For now, loo
 
 AUTHOR NAMES recorded sites (n = \_\_\_\_\_\_) from WHERE. They recorded traits like TRAIT 1, TRAIT 2, TRAIT 3.
 
+hi
+
 HINT: you can look at the environment tab on the top-right of RStudio to see the dataframe is 63 observations. You can also run this bit of code like `nrow(df_clean)`. Sometimes I run that in my Console (lower-left) just to check things.
 
 -   [ ] **Task** After writing that into your report, create a new subheading (a heading 3) in your report. You can do this by starting the line with three hashtags. Label this heading 'Traits'
