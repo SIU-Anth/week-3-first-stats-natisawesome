@@ -1,6 +1,6 @@
 ---
-title: "Week 3"
-author: "stantis"
+title: "Gini Wealth Disparity Analysis"
+author: "Natalie Eves"
 format: html
 editor: visual
 ---
@@ -35,8 +35,6 @@ Hint: later in the semester, we'll talk more about this code above. For now, loo
 
 AUTHOR NAMES recorded sites (n = \_\_\_\_\_\_) from WHERE. They recorded traits like TRAIT 1, TRAIT 2, TRAIT 3.
 
-hi
-
 HINT: you can look at the environment tab on the top-right of RStudio to see the dataframe is 63 observations. You can also run this bit of code like `nrow(df_clean)`. Sometimes I run that in my Console (lower-left) just to check things.
 
 -   [ ] **Task** After writing that into your report, create a new subheading (a heading 3) in your report. You can do this by starting the line with three hashtags. Label this heading 'Traits'
@@ -54,7 +52,13 @@ Let's say you really only wanted to check out one group at a time. You can use `
 ```{r}
 #| label: subset example
 OW <- subset(df_clean, World == 'OW')
+mean(OW$Gini)
+```
 
+```{r}
+#| label: subset
+NW <- subset(df_clean, World == 'NW') 
+mean(NW$Gini)
 ```
 
 Now, you can get the mean GINI of Old World sites. Put `mean(OW$Gini)` in the code chunk above and re-run. The mean should appear in the console below. Create a new code chunk (Hint, go to the Source view for an easier time copy-pasting the above code chunk), that generates a new dataframe called 'NW' that subsets all sites from the Americas.
@@ -66,6 +70,21 @@ Maybe we know we're wanting to collect data by all groups. I use a package to he
 ```{r}
 #| label: subset example
 aggregate(df$Gini, list(df$World), FUN = mean) 
+```
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$World), FUN = median)
+```
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$World), FUN = IQR)
+```
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$World), FUN = sd)
 ```
 
 See how it generated mean for both groups? Change the function (FUN) to median to get the other info we need re: central tendencies.
@@ -116,16 +135,137 @@ boxplot(df_clean$Gini ~ df_clean$World)
 
 -   [ ] Final task: rename the title and author of this quarto document (reminder, it's up top)
 
-## Report Goes Here
+## Report - Natalie Eves
 
 <!--# Remember to check for basic clarity and punctuation in the report -->
 
-|                   | Mean +- 1SD | Median +- 1IQR |
-|-------------------|-------------|----------------|
-| *Broad Area*      |             |                |
-| New World         |             |                |
-| Old World         |             |                |
-| *Adaptation*      |             |                |
-| Hunting-Gathering |             |                |
-| Horticulture      |             |                |
-| Agriculture       |             |                |
+Kohler et al. assessed archaeological sites according to Gini coefficients (n = 63) from around the world. They recorded traits such as the site name, Gini coefficent, and date.
+
+### Traits:
+
+The site name, Gini coefficient, and date was recorded. The site name is nominal qualitative data. The Gini coefficient is continuous quantitative data, and the date is discrete quantitative data.
+
+### Methods of Calculating Mean, Median, SD, and IQR:
+
+#### Mean + OW/NW Environment Creation:
+
+##### OW/NW:
+
+```{r}
+#| label: subset example
+OW <- subset(df_clean, World == 'OW')
+mean(OW$Gini)
+```
+
+```{r}
+#| label: subset
+NW <- subset(df_clean, World == 'NW') 
+mean(NW$Gini)
+```
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$World), FUN = mean)
+```
+
+##### Adaptation:
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$Adaptation), FUN = mean)
+```
+
+#### Median:
+
+##### OW/NW
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$World), FUN = median)
+```
+
+##### Adaptation:
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$Adaptation), FUN = median)
+```
+
+#### IQR:
+
+##### OW/NW:
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$World), FUN = IQR)
+```
+
+##### Adaptation:
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$Adaptation), FUN = IQR)
+```
+
+#### SD:
+
+##### OW/NW:
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$World), FUN = sd)
+```
+
+##### Adaptation:
+
+```{r}
+#| label: subset example
+aggregate(df$Gini, list(df$Adaptation), FUN = sd)
+```
+
+### Visualization:
+
+#### Boxplots: 
+
+##### OW/NW:
+
+```{r}
+#| label: boxplot example
+boxplot(df_clean$Gini ~ df_clean$World) 
+```
+
+##### Adaptation:
+
+```{r}
+#| label: boxplot example
+boxplot(df_clean$Gini ~ df_clean$Adaptation) 
+```
+
+#### Scatter plot:
+
+```{r}
+#|: label: Scatter Plot 
+plot(df_clean$delta_years,df$Gini)
+```
+
+### Table:
+
+This table is a summary of the above statistics. The table is written as: mean or median followed by +- then 1SD or IQR. The numbers were rounded three decimal places.
+
+|                   | Mean +- 1SD    | Median +- 1IQR  |
+|-------------------|----------------|-----------------|
+| *Broad Area*      |                |                 |
+| New World         | 0.286 +- 0.114 | 0.260 +- 0.138  |
+| Old World         | 0.336 +- 0.140 | 0.350 +- 0.200  |
+| *Adaptation*      |                |                 |
+| Hunting-Gathering | 0.170 +- 0.022 | 0.170 +- 0.020  |
+| Horticulture      | 0.255+- 0.090  | 0.265 +- 0.1275 |
+| Agriculture       | 0.350 +- 0.129 | 0.350 +- 0.150  |
+
+### Conclusion:
+
+There are patterns between Old World (OW) and New World (NW) societies. OW societies show higher wealth disparities, with a mean Gini coefficient of 0.336 compared to the NW mean of 0.286. The median values of both NW and OW reflect this same pattern. Additionally, the adaptation types show clear patterns as well. Hunter-gathering based societies have the lowest inequality with a mean of 0.170. Agricultural based societies have the highest inequality with a mean of 0.350. Horticulture based societies appear to be a middle ground with a mean of 0.255. According to the scatter lot analysis of delta years and Gini values there is an overall general upward trend of inequality as time goes by.
+
+### Works Cited:
+
+Feinman, Gary. “Greater Post-Neolithic Wealth Disparities in Eurasia than in North America and Mesoamerica (Kohler Et Al. 2017).” Nature, 2017. doi:10.1038/NATURE24646.
